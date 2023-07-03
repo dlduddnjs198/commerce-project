@@ -2,6 +2,7 @@ package com.zerobase.commerce.configuration;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,9 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class TokenProviderTest {
 
+
     @Autowired
     private TokenProvider tokenProvider;
 
+    @DisplayName("JWT 제대로 파싱하는지 테스트")
     @Test
     void TokenParserTest() {
         String token = tokenProvider.generateToken("zerobase157", "USER");

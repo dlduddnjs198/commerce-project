@@ -1,4 +1,4 @@
-package com.zerobase.commerce;
+package com.zerobase.commerce.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
