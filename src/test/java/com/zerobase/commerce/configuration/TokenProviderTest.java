@@ -1,5 +1,6 @@
 package com.zerobase.commerce.configuration;
 
+import com.zerobase.commerce.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,9 @@ class TokenProviderTest {
     @Autowired
     private TokenProvider tokenProvider;
 
+    @Autowired
+    private TokenService tokenService;
+
     @DisplayName("JWT 제대로 파싱하는지 테스트")
     @Test
     void TokenParserTest() {
@@ -21,7 +25,7 @@ class TokenProviderTest {
 
         System.out.println(token);
 
-        Jws<Claims> parse = tokenProvider.parseToken(token);
+        Jws<Claims> parse = tokenService.parseToken(token);
 
         System.out.println(parse.getHeader().toString());
         System.out.println(parse.getBody().toString());

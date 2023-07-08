@@ -1,4 +1,4 @@
-package com.zerobase.commerce;
+package com.zerobase.commerce.user.entity;
 
 import com.zerobase.commerce.user.entity.BaseTimeEntity;
 import jakarta.persistence.*;

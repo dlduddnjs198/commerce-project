@@ -1,5 +1,6 @@
 package com.zerobase.commerce.configuration;
 
+import com.zerobase.commerce.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ import static com.zerobase.commerce.type.Role.USER;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
-    private final TokenProvider tokenProvider;
+    private final TokenService tokenService;
 
     // BCryptPasswordEncoder를 통해서 비밀번호를 암호화하고 해당 빈을 통해서 암호화 및 비교작업 수행
     @Bean
@@ -76,11 +77,12 @@ public class SecurityConfiguration {
                         .requestMatchers("/user/signin").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority(USER.name(), ADMIN.name())
                         .requestMatchers("/admin/**").hasAuthority(ADMIN.name())
+                        .requestMatchers("/cart/**").hasAnyAuthority(USER.name(), ADMIN.name())
                         .anyRequest().permitAll()
         );
 
         // 로그인 시 jwt 필터링
-        http.addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
 
         // 프론트엔드 페이지 구현시 사용
 //        // 로그인 페이지 엔드포인트 설정

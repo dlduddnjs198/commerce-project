@@ -1,6 +1,6 @@
 package com.zerobase.commerce.user.repository;
 
-import com.zerobase.commerce.User;
+import com.zerobase.commerce.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

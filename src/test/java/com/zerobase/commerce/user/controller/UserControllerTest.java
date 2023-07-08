@@ -1,8 +1,9 @@
 package com.zerobase.commerce.user.controller;
 
-import com.zerobase.commerce.User;
+import com.zerobase.commerce.user.entity.User;
 import com.zerobase.commerce.configuration.TokenProvider;
 import com.zerobase.commerce.dto.ErrorResponse;
+import com.zerobase.commerce.service.TokenService;
 import com.zerobase.commerce.type.ErrorCode;
 import com.zerobase.commerce.user.dto.UserResponseDto;
 import com.zerobase.commerce.user.dto.form.SignInForm;
@@ -54,6 +55,9 @@ class UserControllerTest {
     @Autowired
     private TokenProvider tokenProvider;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Mock
     private UserRepository userRepository;
 
@@ -98,7 +102,7 @@ class UserControllerTest {
         ErrorResponse errorResponse = (ErrorResponse) response.getBody();
         assertEquals(ErrorCode.PASSWORD_UNMATCHED, errorResponse.getErrorCode());
         assertEquals(ErrorCode.PASSWORD_UNMATCHED.getDescription(), errorResponse.getErrorMessages().get(0));
-        assertEquals("404", errorResponse.getHttpStatusCode());
+        assertEquals("404", errorResponse.getHttpStatus());
     }
 
     @DisplayName("회원가입 성공 테스트")
@@ -155,7 +159,7 @@ class UserControllerTest {
         //then(어떤 결과가 나와야한다)
         assertEquals(HttpStatus.OK, response.getStatusCode());
         String token = (String) response.getBody();
-        Jws<Claims> parse = tokenProvider.parseToken(token);
+        Jws<Claims> parse = tokenService.parseToken(token);
 
         assertEquals("zerobase123", parse.getBody().get("userId"));
     }

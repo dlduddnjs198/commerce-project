@@ -6,6 +6,7 @@ import com.zerobase.commerce.user.dto.form.SignUpForm;
 import com.zerobase.commerce.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -32,12 +33,12 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
             // 200 response with 404 status code
-            return ResponseEntity.ok(new ErrorResponse(INVALID_REQUEST, "404", errors));
+            // return ResponseEntity.ok(new ErrorResponse(INVALID_REQUEST, "404", errors));
             // or 404 request
-            //  return ResponseEntity.badRequest().body(new ErrorResponse(INVALID_REQUEST, "404", errors));
+            return ResponseEntity.badRequest().body(new ErrorResponse(INVALID_REQUEST, HttpStatus.NOT_FOUND, errors));
         }
         if (!form.getPassword().equals(form.getCheckedPassword())) {
-            return ResponseEntity.ok(new ErrorResponse(PASSWORD_UNMATCHED, "404", PASSWORD_UNMATCHED.getDescription()));
+            return ResponseEntity.badRequest().body(new ErrorResponse(PASSWORD_UNMATCHED, HttpStatus.NOT_FOUND, PASSWORD_UNMATCHED.getDescription()));
         }
         return ResponseEntity.ok(userService.signUp(form));
     }
@@ -47,9 +48,9 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
             // 200 response with 404 status code
-            return ResponseEntity.ok(new ErrorResponse(INVALID_REQUEST, "404", errors));
+            // return ResponseEntity.ok(new ErrorResponse(INVALID_REQUEST, "404", errors));
             // or 404 request
-            //  return ResponseEntity.badRequest().body(new ErrorResponse(INVALID_REQUEST, "404", errors));
+            return ResponseEntity.badRequest().body(new ErrorResponse(INVALID_REQUEST, HttpStatus.NOT_FOUND, errors));
         }
 
         return ResponseEntity.ok(userService.signIn(form));

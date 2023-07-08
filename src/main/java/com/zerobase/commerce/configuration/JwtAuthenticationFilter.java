@@ -2,6 +2,7 @@ package com.zerobase.commerce.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zerobase.commerce.dto.ErrorResponse;
+import com.zerobase.commerce.service.TokenService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,17 +26,17 @@ import static com.zerobase.commerce.type.ErrorCode.TOKEN_EXPIRED;
 @Slf4j
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
-    private final TokenProvider tokenProvider;
+    private final TokenService tokenService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 헤더에서 JWT 를 받아옵니다.
-        String token = tokenProvider.resolveToken((HttpServletRequest) request);
+        String token = tokenService.resolveToken((HttpServletRequest) request);
         // 유효한 토큰인지 확인합니다.
         try {
-            if (token != null && tokenProvider.validateToken(token)) {
+            if (token != null && tokenService.validateToken(token)) {
                 // 토큰이 유효하면 토큰으로부터 유저 정보를 받아옵니다.
-                Authentication authentication = tokenProvider.getAuthentication(token);
+                Authentication authentication = tokenService.getAuthentication(token);
                 // SecurityContext 에 Authentication 객체를 저장합니다.
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -49,7 +50,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             httpResponse.setCharacterEncoding("UTF-8");
 
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(response.getWriter(), new ErrorResponse(TOKEN_EXPIRED, "401", TOKEN_EXPIRED.getDescription()));
+            objectMapper.writeValue(response.getWriter(), new ErrorResponse(TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED, TOKEN_EXPIRED.getDescription()));
             return;
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -60,7 +61,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             httpResponse.setCharacterEncoding("UTF-8");
 
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(response.getWriter(), new ErrorResponse(INVALID_REQUEST, "404", INVALID_REQUEST.getDescription()));
+            objectMapper.writeValue(response.getWriter(), new ErrorResponse(INVALID_REQUEST, HttpStatus.NOT_FOUND, INVALID_REQUEST.getDescription()));
             return;
         }
 

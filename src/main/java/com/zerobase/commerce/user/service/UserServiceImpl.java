@@ -1,6 +1,6 @@
 package com.zerobase.commerce.user.service;
 
-import com.zerobase.commerce.User;
+import com.zerobase.commerce.user.entity.User;
 import com.zerobase.commerce.configuration.TokenProvider;
 import com.zerobase.commerce.exception.UserException;
 import com.zerobase.commerce.type.Role;
@@ -28,6 +28,8 @@ import static com.zerobase.commerce.type.ErrorCode.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    private final TokenProvider tokenProvider;
 
     @Transactional
     @Override
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // token을 어디에 저장할지 설정하지 않으면 default로 쿠키에 저장된다고 한다.
-        return TokenProvider.generateToken(form.getUserId(), Role.USER.name());
+        return tokenProvider.generateToken(form.getUserId(), Role.USER.name());
     }
 
     @Override

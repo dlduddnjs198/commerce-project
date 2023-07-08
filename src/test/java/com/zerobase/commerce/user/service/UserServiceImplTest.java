@@ -1,6 +1,6 @@
 package com.zerobase.commerce.user.service;
 
-import com.zerobase.commerce.User;
+import com.zerobase.commerce.user.entity.User;
 import com.zerobase.commerce.exception.UserException;
 import com.zerobase.commerce.user.dto.form.SignInForm;
 import com.zerobase.commerce.user.dto.form.SignUpForm;

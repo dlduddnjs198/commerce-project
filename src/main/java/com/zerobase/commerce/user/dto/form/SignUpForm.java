@@ -1,6 +1,6 @@
 package com.zerobase.commerce.user.dto.form;
 
-import com.zerobase.commerce.User;
+import com.zerobase.commerce.user.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
