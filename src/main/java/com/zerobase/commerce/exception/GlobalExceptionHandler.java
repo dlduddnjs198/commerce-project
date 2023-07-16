@@ -11,7 +11,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler(UserException.class)
     public ErrorResponse handleUserException(UserException e) {
-        log.error("{} is occurred.", e.getErrorCode());
+        log.error("UserException {} is occurred.", e.getErrorCode());
+
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+
+        return new ErrorResponse(e.getErrorCode(), httpStatus, e.getErrorMessage());
+    }
+
+    @ExceptionHandler(ProductException.class)
+    public ErrorResponse handleProductException(ProductException e) {
+        log.error("ProductException {} is occurred.", e.getErrorCode());
+
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+
+        return new ErrorResponse(e.getErrorCode(), httpStatus, e.getErrorMessage());
+    }
+
+    @ExceptionHandler(ReviewException.class)
+    public ErrorResponse handleProductException(ReviewException e) {
+        log.error("ReviewException {} is occurred.", e.getErrorCode());
 
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 

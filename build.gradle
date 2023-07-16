@@ -43,9 +43,12 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test' // spring-web
     testImplementation 'org.springframework.security:spring-security-test' // spring-security
+    implementation 'org.springframework.data:spring-data-elasticsearch:5.0.6' // elastic search
     testImplementation 'org.mockito:mockito-core:5.3.1'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+    testImplementation 'edu.mit:jwi:2.2.3' // 테스트 데이터를 만들기 위한 사전 라이브러리
+    testImplementation 'net.sf.extjwnl:extjwnl:2.0.5' // 테스트 데이터를 만들기 위한 사전 라이브러리
 }
 
 tasks.named('test') {
