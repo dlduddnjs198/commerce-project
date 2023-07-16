@@ -11,6 +11,8 @@ public enum ErrorCode {
     PASSWORD_UNMATCHED("비밀번호기 일치하지 않습니다."),
     USERID_ALREADY_EXIST("이미 존재하는 아이디입니다."),
     TOKEN_EXPIRED("인증 토큰이 만료되었습니다."),
-    USER_NOT_FOUND("회원 정보가 존재하지 않습니다.");
+    USER_NOT_FOUND("회원 정보가 존재하지 않습니다."),
+    PRODUCT_NOT_FOUND("상품 정보가 존재하지 않습니다."),
+    REVIEW_NOT_FOUND("리뷰 정보가 존재하지 않습니다.");
     private final String description;
 }
