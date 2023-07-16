@@ -1,5 +1,7 @@
-package com.zerobase.commerce;
+package com.zerobase.commerce.cart.entity;
 
+import com.zerobase.commerce.product.entity.Product;
+import com.zerobase.commerce.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
