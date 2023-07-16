@@ -1,6 +1,8 @@
-package com.zerobase.commerce;
+package com.zerobase.commerce.review.entity;
 
+import com.zerobase.commerce.product.entity.Product;
 import com.zerobase.commerce.user.entity.BaseTimeEntity;
+import com.zerobase.commerce.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +28,6 @@ public class Review extends BaseTimeEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userId")
     private User user;
 }
